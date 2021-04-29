@@ -1,5 +1,6 @@
 library tiktoklikescroller;
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 /// A fullscreen vertical scroller like TikTok
@@ -12,6 +13,7 @@ class TikTokStyleFullPageScroller extends StatefulWidget {
     this.swipePositionThreshold = 0.20,
     this.swipeVelocityThreshold = 1000,
     this.animationDuration = const Duration(milliseconds: 300),
+    this.isBottomNavigationBarDisplayed = false,
   });
 
   /// The number of elements in the list,
@@ -32,6 +34,9 @@ class TikTokStyleFullPageScroller extends StatefulWidget {
   /// The time the card will take to animate to either off the screen or its
   /// resting position,
   final Duration animationDuration;
+
+  /// If the BottomNavigationBar is displayed or not
+  final bool isBottomNavigationBarDisplayed;
 
   @override
   _TikTokStyleFullPageScrollerState createState() =>
@@ -64,7 +69,12 @@ class _TikTokStyleFullPageScrollerState
 
   @override
   Widget build(BuildContext context) {
-    _screenSize = MediaQuery.of(context).size;
+    _screenSize = widget.isBottomNavigationBarDisplayed
+        ? Size(
+            MediaQuery.of(context).size.width,
+            MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
+          )
+        : MediaQuery.of(context).size;
 
     return Stack(
       children: <Widget>[
